@@ -127,7 +127,7 @@ describe('primer', () => {
   it('gem/GEM_INSTRUCTIONS.md contains the current static primer', () => {
     const md = readFileSync(join(REPO_ROOT, 'gem', 'GEM_INSTRUCTIONS.md'), 'utf8');
     assert.ok(md.includes(staticPrimer()), 'run npm run gen:gem');
-    assert.match(md, /Gem 만들기/);
+    assert.match(md, /New Gem/);
     assert.match(md, /System instructions/);
   });
 });
