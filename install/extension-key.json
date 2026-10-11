@@ -1,0 +1,5 @@
+{
+  "id": "ekplpihmkdcielcfideebgocdkajifcc",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8cGcwoijUGN+PM26jZ6DKVpM9nXDn6u0RkLhhLl6wcfVhJ0JaftpTB6ieOuMwG25BAZc/sp+h2Glj1DFZBmajc6Y1Df1gX1mPLbMhKgcx+r7Vf0tzNiKTFjMgO6Yr1+29FTrzr/5zlNtFDONxK3SrxyhljjBIVHw2qpLZkkdmdxVyvKH+2JR7/W45UewI5PvTirPV1LVa8feyYkypF4WszKQlia4AVM7XoWRd4qPpzz+5egfu1OWEvT33wXazLWLX83tC+yXBlIyYfRHz/BStAy1Oo5G1P1qeQ8Wg/oljck8xCGzOSSLFXm575o6r9xf5WKsQ8Nf62af0ClAq1geYwIDAQAB",
+  "note": "Public key only. Pins the unpacked extension ID so the native host can allow exactly this origin."
+}

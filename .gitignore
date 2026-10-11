@@ -1,0 +1,5 @@
+node_modules/
+.test-profile/
+test/.tmp/
+*.log
+host/native-host.cmd

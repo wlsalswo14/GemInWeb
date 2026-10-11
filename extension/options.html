@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GemInWeb 옵션</title>
+<style>
+  :root { --bg:#fff; --fg:#1f2328; --muted:#656d76; --line:#d0d7de; --card:#f6f8fa; --accent:#1a73e8; --ok:#1a7f37; --err:#cf222e; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1f2124; --fg:#e6e6e6; --muted:#9aa0a6; --line:#3c4043; --card:#2a2c2f; --accent:#8ab4f8; --ok:#81c995; --err:#f28b82; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.5 "Segoe UI", "Malgun Gothic", system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 16px; margin: 28px 0 8px; }
+  .sub { color: var(--muted); margin: 0 0 16px; }
+  fieldset { border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px 16px; margin: 0 0 16px; }
+  legend { font-weight: 600; padding: 0 6px; }
+  label { display: block; margin: 10px 0 4px; font-weight: 600; }
+  .hint { color: var(--muted); font-size: 12.5px; margin: 2px 0 0; }
+  input[type=text], input[type=number], input[type=password], select {
+    width: 100%; font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+  .check { display: flex; gap: 8px; align-items: center; font-weight: 600; margin-top: 12px; }
+  button { font: inherit; padding: 6px 14px; border-radius: 6px; border: 1px solid var(--line); background: var(--card); color: var(--fg); cursor: pointer; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  #msg { margin-left: 8px; }
+  .ok { color: var(--ok); } .err { color: var(--err); }
+  pre { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px; overflow: auto; font: 12.5px/1.45 Consolas, "Cascadia Mono", monospace; white-space: pre-wrap; word-break: break-all; }
+  code { font-family: Consolas, "Cascadia Mono", monospace; background: var(--card); padding: 1px 4px; border-radius: 4px; }
+  .http-only.hidden { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <h1>GemInWeb</h1>
+  <p class="sub">Google AI Studio · Gemini 웹이 로컬 파일과 셸을 사용할 수 있게 해 주는 브리지 설정입니다. 확장 ID: <code id="extid"></code></p>
+
+  <form id="form">
+    <fieldset>
+      <legend>연결</legend>
+      <label for="transport">전송 방식</label>
+      <select id="transport">
+        <option value="native">네이티브 메시징 (권장)</option>
+        <option value="http">HTTP 서버 (대체 경로)</option>
+      </select>
+      <div class="http-only" id="httpBox">
+        <label for="httpUrl">HTTP 주소</label>
+        <input type="text" id="httpUrl" placeholder="http://127.0.0.1:7679">
+        <label for="httpToken">HTTP 토큰</label>
+        <input type="password" id="httpToken" autocomplete="off" placeholder="%USERPROFILE%\.devspace-gem\http-token 내용">
+        <p class="hint">서버를 처음 실행할 때 출력되는 토큰 또는 <code>%USERPROFILE%\.devspace-gem\http-token</code> 파일 내용을 붙여 넣으세요.</p>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button type="button" id="test">연결 테스트</button>
+        <span id="testMsg"></span>
+      </div>
+      <pre id="testOut" hidden></pre>
+    </fieldset>
+
+    <fieldset>
+      <legend>에이전트</legend>
+      <label for="approval">승인 모드</label>
+      <select id="approval">
+        <option value="auto">자동 — 모든 도구를 바로 실행</option>
+        <option value="ask_shell">셸 명령만 확인 — run_shell 실행 전에 승인</option>
+        <option value="ask_mutating">변경 작업 모두 확인 — 셸/쓰기/수정/패치 전에 승인</option>
+        <option value="read_only">읽기 전용 — 변경 도구는 자동 거부</option>
+      </select>
+      <div class="grid">
+        <div>
+          <label for="maxSteps">최대 자동 단계 (일시 정지 전)</label>
+          <input type="number" id="maxSteps" min="1" max="500">
+        </div>
+        <div>
+          <label for="maxCallsPerTurn">메시지당 최대 도구 호출</label>
+          <input type="number" id="maxCallsPerTurn" min="1" max="50">
+        </div>
+        <div>
+          <label for="mmcGemini">결과 메시지 최대 길이 — Gemini</label>
+          <input type="number" id="mmcGemini" min="2000" max="1000000" step="1000">
+        </div>
+        <div>
+          <label for="mmcAistudio">결과 메시지 최대 길이 — AI Studio</label>
+          <input type="number" id="mmcAistudio" min="2000" max="1000000" step="1000">
+        </div>
+      </div>
+      <label for="primerMode">작업 시작 시 보낼 지침</label>
+      <select id="primerMode">
+        <option value="full">전체 프로토콜 + 컨텍스트 (기본)</option>
+        <option value="context">짧은 컨텍스트만 (Gem / 시스템 지침에 프로토콜을 이미 넣은 경우)</option>
+      </select>
+      <label class="check"><input type="checkbox" id="autoSend"> 결과를 자동으로 전송</label>
+      <p class="hint">끄면 결과를 입력창에 넣기만 하고 전송은 직접 합니다.</p>
+    </fieldset>
+
+    <div class="row">
+      <button type="submit" class="primary">저장</button>
+      <button type="button" id="reset">기본값으로</button>
+      <span id="msg"></span>
+    </div>
+  </form>
+
+  <h2>설치 안내</h2>
+  <p>네이티브 호스트가 설치되지 않았다면, 저장소 루트에서 PowerShell로 실행하세요:</p>
+  <pre>powershell -ExecutionPolicy Bypass -File install\install.ps1</pre>
+  <p class="hint">설치 후 Chrome을 완전히 다시 시작하면 연결됩니다. 설정 파일: <code>%USERPROFILE%\.devspace-gem\config.json</code> (allowedRoots 등), 로그: <code>%USERPROFILE%\.devspace-gem\logs\host.log</code>.</p>
+  <p>HTTP 대체 경로를 쓰려면 서버를 실행한 뒤 위에서 전송 방식을 HTTP로 바꾸고 토큰을 입력하세요:</p>
+  <pre>node server\http-server.mjs</pre>
+</main>
+<script src="defaults.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

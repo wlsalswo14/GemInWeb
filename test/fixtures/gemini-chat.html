@@ -1,0 +1,366 @@
+<!doctype html>
+<!--
+  GemInWeb — sanitized structural snapshot of Gemini web (gemini.google.com/app).
+  Source: live inspection 2026-10-11, logged-out fresh browser profile, Korean UI,
+  model "3.5 Flash-Lite". See docs/dom-research.md.
+
+  Sanitization: all conversation text replaced with placeholders; tracking
+  attributes (data-ved, data-hveid, jslog) and Angular-generated noise
+  (ng-tns-c*, _ngcontent-*, _nghost-*, ng-star-inserted, aria-describedby ids)
+  removed; Angular custom-element tags, classes, data-test-id, aria-* and
+  mat-icon fonticon attributes kept exactly as observed. mat-icon elements have
+  NO text content on the live site (font icons via the fonticon attribute).
+
+  Layout of this file:
+    - <body> = COMPLETED state: one user turn + one finished model turn with a
+      devspace code block, empty idle input (send slot absent, as on the live site).
+    - <template id="tpl-send-slot-idle">       send slot when the editor has text
+    - <template id="tpl-send-slot-generating"> same slot while generating (Stop)
+    - <template id="tpl-model-response-streaming"> model turn mid-stream
+    - <template id="tpl-model-thoughts">        thoughts panel [OSS, NOT live-verified:
+        thinking models are disabled logged-out]; insert as the first child of
+        .response-content to emulate a thinking model.
+  Templates are inert, so DSG.SELECTORS do not match their contents until a
+  test clones them into the document.
+-->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>Gemini fixture</title>
+<style>
+  .cdk-visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  body { font-family: sans-serif; }
+</style>
+</head>
+<body>
+<chat-app>
+<main class="chat-app">
+<chat-window>
+  <div id="chat-history" class="chat-history-scroll-container lm remove-desktop-scroll-mask">
+    <infinite-scroller data-test-id="chat-history-container" class="chat-history" data-lhcontainer="1">
+
+      <div class="conversation-container message-actions-hover-boundary" id="0123456789abcdef">
+
+        <!-- ===================== USER TURN ===================== -->
+        <user-query>
+          <span class="user-query-container">
+            <user-query-content class="user-query-container enable-luminous-prompt-bubble enable-luminous-fast-follows">
+              <div class="user-query-container">
+                <div class="file-preview-container"></div>
+                <div class="query-content" id="user-query-content-0">
+                  <div class="query-bubble-with-status">
+                    <span class="user-query-bubble-with-background">
+                      <span class="horizontal-container">
+                        <div class="query-text gds-body-l" dir="ltr">
+                          <h5 class="cdk-visually-hidden screen-reader-user-query-label"><span>말씀하신 내용</span></h5>
+                          <!-- user text is rendered as plain lines, NOT markdown: fenced blocks stay plain text -->
+                          <p class="query-text-line">USER_PROMPT_LINE_1</p>
+                          <p class="query-text-line">```devspace</p>
+                          <p class="query-text-line">{"tool":"read_file","args":{"path":"USER_PASTED_EXAMPLE"}}</p>
+                          <p class="query-text-line">```</p>
+                        </div>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div class="luminous-actions-container">
+                  <gem-icon-button type="onSurface" data-test-id="prompt-copy-button" class="mat-mdc-tooltip-trigger luminous-action-button gem-button">
+                    <button class="mdc-icon-button mat-mdc-icon-button mat-mdc-button-base" aria-controls="user-query-content-0" aria-label="프롬프트 복사">
+                      <gem-icon><mat-icon role="img" class="mat-icon notranslate lumi-symbols mat-ligature-font" aria-hidden="true" data-mat-icon-type="font" data-mat-icon-name="copy" fonticon="copy"></mat-icon></gem-icon>
+                    </button>
+                  </gem-icon-button>
+                  <gem-icon-button type="onSurface" data-test-id="prompt-edit-button" class="mat-mdc-tooltip-trigger luminous-action-button gem-button">
+                    <button class="mdc-icon-button mat-mdc-icon-button mat-mdc-button-base" aria-controls="user-query-content-0" aria-label="수정">
+                      <gem-icon><mat-icon role="img" class="mat-icon notranslate lumi-symbols mat-ligature-font" aria-hidden="true" data-mat-icon-type="font" data-mat-icon-name="edit" fonticon="edit"></mat-icon></gem-icon>
+                    </button>
+                  </gem-icon-button>
+                </div>
+              </div>
+            </user-query-content>
+          </span>
+        </user-query>
+
+        <!-- ===================== MODEL TURN (completed) ===================== -->
+        <model-response class="enable-lr26-response-chrome-updates">
+          <div>
+            <response-container class="reduced-bottom-padding enable-lr26-response-chrome-updates">
+              <div class="response-container response-container-with-gpi no-background">
+                <div class="response-container-header">
+                  <div class="response-container-header-controls"></div>
+                  <div class="response-container-header-status">
+                    <div class="response-container-header-processing-state"></div>
+                  </div>
+                </div>
+                <div class="presented-response-container">
+                  <div class="response-container-content">
+                    <div class="response-content">
+                      <!-- (thinking models: <model-thoughts> goes here — see tpl-model-thoughts) -->
+                      <thinking-overlay class="enable-luminous-fast-follows"></thinking-overlay>
+                      <div class="model-response-label-announcer" aria-busy="false" aria-live="polite">
+                        <h6 class="cdk-visually-hidden screen-reader-model-response-label">Gemini의 응답</h6>
+                      </div>
+                      <model-response-content>
+                        <structured-content-container class="model-response-text processing-state-visible">
+                          <div class="container">
+                            <message-content id="message-content-id-r_0123456789abcdef">
+                              <div class="markdown markdown-main-panel md-content enable-luminous-fast-follows" id="model-response-message-contentr_0123456789abcdef" aria-busy="false" aria-live="polite" dir="ltr">
+                                <response-element class="no-md md-has-block-component">
+                                  <code-block class="enable-luminous-code-block">
+                                    <div class="code-block ng-animate-disabled">
+                                      <div class="formatted-code-block-internal-container">
+                                        <div class="animated-opacity">
+                                          <div class="code-block-decoration header-formatted gds-emphasized-body-m">
+                                            <!-- unknown fence language (devspace) => localized generic label -->
+                                            <span>코드 스니펫</span>
+                                            <div class="buttons">
+                                              <gem-icon-button type="onSurface" class="mat-mdc-tooltip-trigger download-button gem-button">
+                                                <button class="mdc-icon-button mat-mdc-icon-button mat-mdc-button-base" aria-label="코드 다운로드">
+                                                  <gem-icon><mat-icon role="img" class="mat-icon notranslate lumi-symbols mat-ligature-font" aria-hidden="true" data-mat-icon-type="font" data-mat-icon-name="arrow_circle_down" fonticon="arrow_circle_down"></mat-icon></gem-icon>
+                                                </button>
+                                              </gem-icon-button>
+                                              <gem-icon-button type="onSurface" data-test-id="gem-copy-button" class="mat-mdc-tooltip-trigger copy-button gem-button">
+                                                <button class="mdc-icon-button mat-mdc-icon-button mat-mdc-button-base" aria-label="코드 복사">
+                                                  <gem-icon><mat-icon role="img" class="mat-icon notranslate lumi-symbols mat-ligature-font" aria-hidden="true" data-mat-icon-type="font" data-mat-icon-name="copy" fonticon="copy"></mat-icon></gem-icon>
+                                                </button>
+                                              </gem-icon-button>
+                                            </div>
+                                          </div>
+                                          <pre><code role="text" data-test-id="code-content" class="code-container formatted">{"tool":"list_dir","args":{"path":"."}}
+</code></pre>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </code-block>
+                                </response-element>
+                              </div>
+                            </message-content>
+                          </div>
+                        </structured-content-container>
+                      </model-response-content>
+                      <!-- `complete` class is added only when the turn has finished -->
+                      <div class="response-footer gap complete">
+                        <sources-list class="sources-list"></sources-list>
+                      </div>
+                    </div>
+                    <sensitive-memories-banner></sensitive-memories-banner>
+                  </div>
+                </div>
+                <!-- footer + message-actions are rendered only after completion -->
+                <div class="response-container-footer">
+                  <message-actions class="hide-on-print">
+                    <div class="actions-container-v2">
+                      <div class="buttons-container-v2">
+                        <regenerate-button>
+                          <gem-icon-button type="onSurface" class="mat-mdc-tooltip-trigger gem-button" data-test-id="regenerate-button" aria-disabled="false" aria-haspopup="true" aria-expanded="false">
+                            <button class="mdc-icon-button mat-mdc-icon-button mat-mdc-button-base" aria-label="다시 실행">
+                              <gem-icon><mat-icon role="img" class="mat-icon notranslate lumi-symbols mat-ligature-font" aria-hidden="true" data-mat-icon-type="font" data-mat-icon-name="refresh" fonticon="refresh"></mat-icon></gem-icon>
+                            </button>
+                          </gem-icon-button>
+                        </regenerate-button>
+                        <copy-button>
+                          <gem-icon-button type="onSurface" class="mat-mdc-tooltip-trigger gem-button">
+                            <button class="mdc-icon-button mat-mdc-icon-button mat-mdc-button-base" aria-label="복사">
+                              <gem-icon><mat-icon role="img" class="mat-icon notranslate lumi-symbols mat-ligature-font" aria-hidden="true" data-mat-icon-type="font" data-mat-icon-name="copy" fonticon="copy"></mat-icon></gem-icon>
+                            </button>
+                          </gem-icon-button>
+                        </copy-button>
+                        <div class="menu-button-wrapper">
+                          <div class="more-menu-button-container">
+                            <gem-icon-button type="onSurface" data-test-id="more-menu-button" class="mat-mdc-tooltip-trigger gem-button" aria-disabled="false" aria-haspopup="true" aria-expanded="false">
+                              <button class="mdc-icon-button mat-mdc-icon-button mat-mdc-button-base" aria-label="옵션 더보기">
+                                <gem-icon><mat-icon role="img" class="mat-icon notranslate lumi-symbols mat-ligature-font" aria-hidden="true" data-mat-icon-type="font" data-mat-icon-name="more_horiz" fonticon="more_horiz"></mat-icon></gem-icon>
+                              </button>
+                            </gem-icon-button>
+                          </div>
+                        </div>
+                        <div class="spacer"></div>
+                      </div>
+                    </div>
+                  </message-actions>
+                </div>
+              </div>
+            </response-container>
+          </div>
+          <freemium-rag-disclaimer></freemium-rag-disclaimer>
+        </model-response>
+      </div>
+
+      <div class="restart-chat-button-scroll-placeholder"></div>
+      <model-response-disclaimers></model-response-disclaimers>
+    </infinite-scroller>
+  </div>
+
+  <!-- ===================== INPUT AREA (idle, empty) ===================== -->
+  <div class="input-area-container">
+    <input-area-v2 class="ui-improvements-phase-1 with-toolbox-d">
+      <div data-node-type="input-area" class="input-area children-ready">
+        <fieldset role="none" class="input-area-fieldset">
+          <div class="text-input-field simplified-input-area">
+            <div class="single-line-format">
+              <div class="text-input-field-main-area">
+                <div data-test-id="textarea-inner" class="text-input-field_textarea-inner">
+                  <div data-test-id="textarea-wrapper" class="textarea-wrapper">
+                    <rich-textarea class="text-input-field_textarea ql-container ql-bubble simplified" aria-haspopup="menu" dir="ltr">
+                      <!-- Quill editor. Empty state = <p><br></p> + class ql-blank.
+                           Each line of text becomes its own <p>. Max 32,000 chars. -->
+                      <div class="ql-editor ql-blank textarea new-input-ui rich-query-formatting-enabled" data-gramm="false" contenteditable="true" dir="ltr" role="textbox" aria-multiline="true" aria-label="Gemini 프롬프트 입력" data-placeholder="Gemini에게 물어보기"><p><br></p></div>
+                      <div class="ql-clipboard" contenteditable="true" tabindex="-1"></div>
+                    </rich-textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="leading-actions-wrapper has-model-picker">
+              <simplified-input-menu class="simplified-input-menu">
+                <div class="simplified-input-menu-container">
+                  <gem-icon-button type="onSurface" class="menu-button gem-menu-button gem-button">
+                    <button class="mdc-icon-button mat-mdc-icon-button mat-mdc-button-base" aria-expanded="false" aria-haspopup="menu" aria-label="업로드 및 도구">
+                      <gem-icon><mat-icon role="img" class="mat-icon notranslate lumi-symbols mat-ligature-font" aria-hidden="true" data-mat-icon-type="font" data-mat-icon-name="plus" fonticon="plus"></mat-icon></gem-icon>
+                    </button>
+                  </gem-icon-button>
+                </div>
+              </simplified-input-menu>
+            </div>
+            <div class="trailing-actions-wrapper with-model-picker">
+              <div class="model-picker-container">
+                <bard-mode-switcher>
+                  <div role="group" class="pill-ui-logo-container gem-menu-redesign under-input">
+                    <button data-test-id="bard-mode-menu-button" class="mdc-button mat-mdc-button-base input-area-switch" type="button" aria-label="모드 선택 도구 열기, 현재 Flash-Lite 모드 사용 중" aria-disabled="false" aria-haspopup="true" aria-expanded="false">
+                      <span class="mdc-button__label"><div data-test-id="logo-pill-label-container" class="logo-pill-label-container input-area-switch-label"><span>Flash-Lite</span></div></span>
+                    </button>
+                  </div>
+                </bard-mode-switcher>
+              </div>
+              <div class="input-buttons-wrapper-bottom persistent-mic">
+                <div class="mic-button-container persistent-mic">
+                  <speech-dictation-mic-button class="speech-dictation-mic-button">
+                    <div data-node-type="speech_dictation_mic_button" class="gem-mic-button-wrapper lm-enabled">
+                      <gem-icon-button type="onSurface" class="mat-mdc-tooltip-trigger speech_dictation_mic_button gem-button" aria-pressed="false">
+                        <button class="mdc-icon-button mat-mdc-icon-button mat-mdc-button-base" aria-label="음성기록 (^⇧D)">
+                          <gem-icon><mat-icon role="img" class="mat-icon notranslate lumi-symbols mat-ligature-font" aria-hidden="true" data-mat-icon-type="font" data-mat-icon-name="mic" fonticon="mic"></mat-icon></gem-icon>
+                        </button>
+                      </gem-icon-button>
+                    </div>
+                  </speech-dictation-mic-button>
+                </div>
+                <!-- SEND SLOT: absent while the editor is empty. Insert
+                     tpl-send-slot-idle here when text is present, swap to
+                     tpl-send-slot-generating while generating. -->
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </input-area-v2>
+  </div>
+</chat-window>
+</main>
+</chat-app>
+
+<!-- Send slot, editor non-empty, idle. (gem-icon-button has classes `has-input submit`) -->
+<template id="tpl-send-slot-idle">
+  <div data-test-id="send-button-container" class="mat-mdc-tooltip-trigger send-button-container visible persistent-mic inner lm-enabled">
+    <gem-icon-button type="onSurface" class="send-button has-input submit gem-button gem-button-size-small gem-button-type-on-surface lm-enabled" aria-disabled="false">
+      <button class="mdc-icon-button mat-mdc-icon-button mat-mdc-button-base" aria-label="메시지 보내기">
+        <gem-icon><mat-icon role="img" class="mat-icon notranslate lumi-symbols mat-ligature-font" aria-hidden="true" data-mat-icon-type="font" data-mat-icon-name="arrow_upward" fonticon="arrow_upward"></mat-icon></gem-icon>
+      </button>
+    </gem-icon-button>
+  </div>
+</template>
+
+<!-- Same slot while generating: `has-input submit` removed, `stop` added; icon + label change.
+     Observed: appears ~250 ms after clicking send; disappears (whole container removed when the
+     editor is empty) ~1.3 s after the first model text, i.e. BEFORE the footer is complete. -->
+<template id="tpl-send-slot-generating">
+  <div data-test-id="send-button-container" class="mat-mdc-tooltip-trigger send-button-container visible persistent-mic inner lm-enabled">
+    <gem-icon-button type="onSurface" class="send-button gem-button gem-button-size-small gem-button-type-on-surface lm-enabled stop">
+      <button class="mdc-icon-button mat-mdc-icon-button mat-mdc-button-base" aria-label="대답 생성 중지">
+        <gem-icon><mat-icon role="img" class="mat-icon notranslate lumi-symbols mat-ligature-font" aria-hidden="true" data-mat-icon-type="font" data-mat-icon-name="stop" fonticon="stop"></mat-icon></gem-icon>
+      </button>
+    </gem-icon-button>
+  </div>
+</template>
+
+<!-- Model turn mid-stream: .markdown aria-busy="true" + class `animate`, response-element
+     `first-token animating`, .response-footer WITHOUT `complete`, .response-container-footer EMPTY
+     (no message-actions). -->
+<template id="tpl-model-response-streaming">
+  <model-response class="enable-lr26-response-chrome-updates">
+    <div>
+      <response-container class="reduced-bottom-padding enable-lr26-response-chrome-updates enable-luminous-sources">
+        <div class="response-container response-container-with-gpi no-background">
+          <div class="response-container-header">
+            <div class="response-container-header-controls"></div>
+            <div class="response-container-header-status"><div class="response-container-header-processing-state"></div></div>
+          </div>
+          <div class="presented-response-container">
+            <div class="response-container-content">
+              <div class="response-content">
+                <thinking-overlay class="enable-luminous-fast-follows"></thinking-overlay>
+                <div class="model-response-label-announcer" aria-busy="false" aria-live="polite">
+                  <h6 class="cdk-visually-hidden screen-reader-model-response-label">Gemini의 응답</h6>
+                </div>
+                <model-response-content>
+                  <structured-content-container class="model-response-text processing-state-visible">
+                    <div class="container">
+                      <message-content id="message-content-id-r_fedcba9876543210">
+                        <div class="markdown markdown-main-panel md-content animate enable-luminous-fast-follows" id="model-response-message-contentr_fedcba9876543210" aria-busy="true" aria-live="polite" dir="ltr">
+                          <response-element class="no-md md-has-block-component first-token animating">
+                            <code-block class="enable-luminous-code-block">
+                              <div class="code-block ng-animate-disabled">
+                                <div class="formatted-code-block-internal-container">
+                                  <div class="animated-opacity">
+                                    <div class="code-block-decoration header-formatted gds-emphasized-body-m">
+                                      <span>코드 스니펫</span>
+                                      <div class="buttons"></div>
+                                    </div>
+                                    <pre><code role="text" data-test-id="code-content" class="code-container formatted">{"tool":"list_dir","args":{"pa</code></pre>
+                                  </div>
+                                </div>
+                              </div>
+                            </code-block>
+                          </response-element>
+                        </div>
+                      </message-content>
+                    </div>
+                  </structured-content-container>
+                </model-response-content>
+                <div class="response-footer animated gap"></div>
+              </div>
+            </div>
+          </div>
+          <div class="response-container-footer"></div>
+        </div>
+      </response-container>
+    </div>
+  </model-response>
+</template>
+
+<!-- Thoughts panel for thinking models. [OSS, NOT live-verified] Structure per
+     voyager-crew/voyager (2026-10): <model-thoughts> with .thoughts-header toggle and
+     .thoughts-container/.thoughts-content; when expanded it contains its OWN
+     message-content/.markdown BEFORE the real answer. Insert as first child of .response-content. -->
+<template id="tpl-model-thoughts">
+  <model-thoughts class="model-thoughts">
+    <div class="model-thoughts">
+      <div class="thoughts-header">
+        <button class="thoughts-header-button" aria-expanded="true">
+          <span class="thoughts-header-button-content">THOUGHTS_TITLE_PLACEHOLDER</span>
+          <mat-icon role="img" class="mat-icon notranslate mat-ligature-font" aria-hidden="true" data-mat-icon-type="font" fonticon="expand_more"></mat-icon>
+        </button>
+      </div>
+      <div class="thoughts-container">
+        <div class="thoughts-content">
+          <message-content>
+            <div class="markdown markdown-main-panel">
+              <p>THOUGHT_TEXT_PLACEHOLDER (must never be parsed for tool calls)</p>
+              <pre><code>{"tool":"run_shell","args":{"command":"THOUGHT_DECOY_MUST_NOT_RUN"}}</code></pre>
+            </div>
+          </message-content>
+        </div>
+      </div>
+    </div>
+  </model-thoughts>
+</template>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "GemInWeb",
+  "version": "0.1.0",
+  "description": "Lets Google AI Studio and Gemini use your local files and shell (DevSpace-style bridge).",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8cGcwoijUGN+PM26jZ6DKVpM9nXDn6u0RkLhhLl6wcfVhJ0JaftpTB6ieOuMwG25BAZc/sp+h2Glj1DFZBmajc6Y1Df1gX1mPLbMhKgcx+r7Vf0tzNiKTFjMgO6Yr1+29FTrzr/5zlNtFDONxK3SrxyhljjBIVHw2qpLZkkdmdxVyvKH+2JR7/W45UewI5PvTirPV1LVa8feyYkypF4WszKQlia4AVM7XoWRd4qPpzz+5egfu1OWEvT33wXazLWLX83tC+yXBlIyYfRHz/BStAy1Oo5G1P1qeQ8Wg/oljck8xCGzOSSLFXm575o6r9xf5WKsQ8Nf62af0ClAq1geYwIDAQAB",
+  "minimum_chrome_version": "116",
+  "permissions": [
+    "storage",
+    "nativeMessaging",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "https://aistudio.google.com/*",
+    "https://gemini.google.com/*",
+    "http://127.0.0.1:7679/*",
+    "http://localhost:7679/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://aistudio.google.com/*",
+        "https://gemini.google.com/*"
+      ],
+      "js": [
+        "content/selectors.js",
+        "content/protocol.js",
+        "content/sites.js",
+        "content/rpc.js",
+        "content/panel.js",
+        "content/agent.js",
+        "content/main.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "options_page": "options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

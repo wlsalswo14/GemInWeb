@@ -1,0 +1,239 @@
+<!doctype html>
+<!--
+  GemInWeb — structural mock of Google AI Studio chat (aistudio.google.com/prompts/...).
+
+  !!! NOT LIVE-OBSERVED. AI Studio requires a Google login and the user asked
+  that their account not be used. This skeleton is RECONSTRUCTED from
+  open-source automation code / test fixtures (see docs/dom-research.md):
+    - chiimagnus/SyncNos  googleaistudio collector + tests (2026-10-04):
+        ms-chat-turn#id > .chat-turn-container.render.(user|model) >
+        .virtual-scroll-container.(user|model)-prompt-container[data-turn-role] >
+        .turn-content; .author-label/.timestamp; ms-thought-chunk > .thought-panel;
+        ms-code-block[data-test-language] > mat-expansion-panel >
+        mat-expansion-panel-header (toolbar) + pre > code; ms-katex > pre > code;
+        ms-run-button .stoppable-spinner/.stoppable-stop
+    - lumingya/universal-web-api aistudio config (2026-09-26): textarea
+        [formcontrolname=promptText], ms-run-button button[type=submit|button],
+        ms-text-chunk / ms-prompt-chunk / ms-cmark-node.cmark-node
+    - CJackHwang/AIstudioProxyAPI selectors.py (2026-04): ms-prompt-input-wrapper,
+        ms-autosize-textarea, aria-label "Run" / "Stop generating", ms-thought-chunk,
+        mat-panel-title + span.material-symbols-outlined in ms-code-block header
+    - afumu/openlink (2026-03) + intense-rp-next (2026-05): system instructions
+        button[data-test-system-instructions-card], textarea[aria-label="System instructions"]
+        .in-run-settings, button[data-test-close-button]
+  Wrapper elements between the documented ones are simplified; exact nesting
+  depth on the live site may differ. Verify against the live DOM before relying
+  on anything beyond the tag/class/attribute names used in DSG.SELECTORS.
+
+  Layout:
+    - <body> = completed state: system-instructions card (closed), one user turn,
+      one model turn (thought chunk + devspace code block + KaTeX decoy),
+      idle input with Run button.
+    - <template id="tpl-run-button-generating"> ms-run-button while generating
+    - <template id="tpl-system-instructions-open"> opened system-instructions panel
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AI Studio fixture</title>
+<style>body { font-family: sans-serif; }</style>
+</head>
+<body class="light-theme">
+<ms-app>
+<div class="makersuite-layout">
+  <ms-prompt-chat>
+    <ms-playground-toolbar>
+      <div class="page-title"><h1 class="mode-title">PROMPT_TITLE_PLACEHOLDER</h1></div>
+    </ms-playground-toolbar>
+
+    <!-- System instructions entry point (closed). -->
+    <button class="system-instructions-card" data-test-system-instructions-card aria-label="System instructions">
+      <span class="material-symbols-outlined notranslate" aria-hidden="true">tune</span>
+      <span class="title">System instructions</span>
+      <span class="subtitle">SYSTEM_INSTRUCTIONS_PREVIEW_PLACEHOLDER</span>
+    </button>
+
+    <ms-autoscroll-container>
+      <div class="chat-session-content">
+
+        <!-- ===================== USER TURN ===================== -->
+        <ms-chat-turn id="turn-00000000-0000-0000-0000-000000000001">
+          <div class="chat-turn-container render user">
+            <div class="virtual-scroll-container user-prompt-container" data-turn-role="User">
+              <div class="turn-content">
+                <div role="heading" aria-level="3" class="author-label">User <span class="timestamp">00:00</span></div>
+                <ms-prompt-chunk>
+                  <ms-text-chunk>
+                    <ms-cmark-node class="cmark-node v3-font-body">
+                      <p><ms-cmark-node><span>USER_PROMPT_PLACEHOLDER</span></ms-cmark-node></p>
+                      <!-- user markdown IS rendered; a pasted example block must not be executed -->
+                      <ms-code-block data-test-language="devspace">
+                        <mat-expansion-panel class="mat-expansion-panel">
+                          <mat-expansion-panel-header class="mat-expansion-panel-header" role="button" aria-expanded="true">
+                            <span class="mat-content">
+                              <mat-panel-title class="mat-expansion-panel-header-title">
+                                <span class="material-symbols-outlined notranslate" aria-hidden="true">code</span>
+                                <span>Devspace</span>
+                              </mat-panel-title>
+                            </span>
+                          </mat-expansion-panel-header>
+                          <div class="mat-expansion-panel-content" role="region">
+                            <div class="mat-expansion-panel-body">
+                              <pre><code>{"tool":"read_file","args":{"path":"USER_PASTED_EXAMPLE"}}</code></pre>
+                            </div>
+                          </div>
+                        </mat-expansion-panel>
+                      </ms-code-block>
+                    </ms-cmark-node>
+                  </ms-text-chunk>
+                </ms-prompt-chunk>
+              </div>
+            </div>
+            <div class="actions-container">
+              <button class="toggle-edit-button" aria-label="Edit"><span class="material-symbols-outlined notranslate" aria-hidden="true">edit</span></button>
+              <ms-chat-turn-options><div><button aria-label="Open options"><span class="material-symbols-outlined notranslate" aria-hidden="true">more_vert</span></button></div></ms-chat-turn-options>
+            </div>
+          </div>
+        </ms-chat-turn>
+
+        <!-- ===================== MODEL TURN (completed) ===================== -->
+        <ms-chat-turn id="turn-00000000-0000-0000-0000-000000000002">
+          <div class="chat-turn-container code-block-aligner render model">
+            <div class="virtual-scroll-container model-prompt-container" data-turn-role="Model">
+              <div class="turn-content">
+                <div role="heading" aria-level="3" class="author-label">Model <span class="timestamp">00:00</span></div>
+
+                <!-- Thoughts (thinking models). Must be excluded. -->
+                <ms-prompt-chunk>
+                  <ms-thought-chunk>
+                    <mat-accordion class="mat-accordion">
+                      <mat-expansion-panel class="mat-expansion-panel thought-panel">
+                        <mat-expansion-panel-header class="mat-expansion-panel-header" role="button" aria-expanded="false">
+                          <span class="mat-content">
+                            <mat-panel-title class="mat-expansion-panel-header-title">
+                              <img alt="Thinking" class="thinking-progress-icon" src="data:," />
+                              <span>Thoughts</span>
+                            </mat-panel-title>
+                          </span>
+                          <span class="material-symbols-outlined notranslate" aria-hidden="true">expand_more</span>
+                        </mat-expansion-panel-header>
+                        <div class="mat-expansion-panel-content" role="region">
+                          <div class="mat-expansion-panel-body">
+                            <ms-text-chunk>
+                              <ms-cmark-node class="cmark-node">
+                                <p><ms-cmark-node><span>THOUGHT_TEXT_PLACEHOLDER</span></ms-cmark-node></p>
+                                <pre><code>{"tool":"run_shell","args":{"command":"THOUGHT_DECOY_MUST_NOT_RUN"}}</code></pre>
+                              </ms-cmark-node>
+                            </ms-text-chunk>
+                          </div>
+                        </div>
+                      </mat-expansion-panel>
+                    </mat-accordion>
+                  </ms-thought-chunk>
+                </ms-prompt-chunk>
+
+                <!-- Answer -->
+                <ms-prompt-chunk>
+                  <ms-text-chunk>
+                    <ms-cmark-node class="cmark-node v3-font-body">
+                      <p><ms-cmark-node><span>MODEL_ANSWER_PLACEHOLDER</span></ms-cmark-node></p>
+                      <!-- KaTeX also renders as pre>code: NOT a code block -->
+                      <!-- (div, not p: a <pre> start tag would auto-close a <p> and its ms-katex) -->
+                      <div>Inline: <ms-katex class="inline"><pre><code class="rendered"><span class="katex"><span class="katex-mathml"><annotation encoding="application/x-tex">E=mc^2</annotation></span><span class="katex-html" aria-hidden="true">E=mc2</span></span></code></pre></ms-katex></div>
+                      <ms-code-block data-test-language="devspace">
+                        <mat-expansion-panel class="mat-expansion-panel mat-expanded">
+                          <mat-expansion-panel-header class="mat-expansion-panel-header" role="button" aria-expanded="true">
+                            <span class="mat-content">
+                              <mat-panel-title class="mat-expansion-panel-header-title">
+                                <span class="material-symbols-outlined notranslate" aria-hidden="true">code</span>
+                                <span>Devspace</span>
+                              </mat-panel-title>
+                            </span>
+                            <!-- toolbar: ligature text pollutes textContent ("download content_copy expand_less") -->
+                            <div class="actions">
+                              <button aria-label="Download"><span class="material-symbols-outlined notranslate" aria-hidden="true">download</span></button>
+                              <button aria-label="Copy to clipboard"><span class="material-symbols-outlined notranslate" aria-hidden="true">content_copy</span></button>
+                              <span class="material-symbols-outlined notranslate" aria-hidden="true">expand_less</span>
+                            </div>
+                          </mat-expansion-panel-header>
+                          <div class="mat-expansion-panel-content" role="region">
+                            <div class="mat-expansion-panel-body">
+                              <pre><code class="hljs">{"tool":"list_dir","args":{"path":"."}}</code></pre>
+                            </div>
+                          </div>
+                        </mat-expansion-panel>
+                      </ms-code-block>
+                    </ms-cmark-node>
+                  </ms-text-chunk>
+                </ms-prompt-chunk>
+              </div>
+            </div>
+            <div class="actions-container">
+              <button class="rerun-button" name="rerun-button" aria-label="Rerun this turn"><span class="material-symbols-outlined notranslate" aria-hidden="true">refresh</span></button>
+              <button class="toggle-edit-button" aria-label="Edit"><span class="material-symbols-outlined notranslate" aria-hidden="true">edit</span></button>
+              <ms-chat-turn-options><div><button aria-label="Open options"><span class="material-symbols-outlined notranslate" aria-hidden="true">more_vert</span></button></div></ms-chat-turn-options>
+            </div>
+          </div>
+        </ms-chat-turn>
+
+      </div>
+    </ms-autoscroll-container>
+
+    <!-- ===================== INPUT AREA (idle) ===================== -->
+    <footer>
+      <ms-prompt-input-wrapper>
+        <div class="prompt-input-wrapper">
+          <ms-chunk-editor>
+            <ms-chunk-input>
+              <div class="text-wrapper">
+                <ms-autosize-textarea data-value="">
+                  <!-- Plain textarea: set via native value setter + 'input' event. Ctrl+Enter = Run; Enter = newline. -->
+                  <textarea class="textarea" formcontrolname="promptText" cdktextareaautosize aria-label="Enter a prompt" placeholder="Start typing a prompt"></textarea>
+                </ms-autosize-textarea>
+              </div>
+            </ms-chunk-input>
+          </ms-chunk-editor>
+          <div class="button-wrapper">
+            <button data-test-id="add-media-button" aria-label="Insert assets such as images, videos, files, or audio"><span class="material-symbols-outlined notranslate" aria-hidden="true">add_circle</span></button>
+            <ms-run-button>
+              <!-- idle: type=submit; disabled while the textarea is empty -->
+              <button type="submit" class="ms-button-primary run-button ctrl-enter-submits" mattooltipclass="run-button-tooltip" aria-label="Run" disabled>
+                <span class="label">Run</span>
+                <span class="shortcut">Ctrl <span class="material-symbols-outlined notranslate" aria-hidden="true">keyboard_return</span></span>
+              </button>
+            </ms-run-button>
+          </div>
+        </div>
+      </ms-prompt-input-wrapper>
+    </footer>
+  </ms-prompt-chat>
+</div>
+</ms-app>
+
+<!-- ms-run-button while generating: the slot turns into a type=button Stop control
+     with a spinner (.stoppable-spinner) / stop glyph (.stoppable-stop). -->
+<template id="tpl-run-button-generating">
+  <ms-run-button>
+    <button type="button" class="ms-button-primary run-button" mattooltipclass="run-button-tooltip" aria-label="Stop generating">
+      <span class="label">Stop</span>
+      <svg class="stoppable-spinner" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle></svg>
+      <span class="stoppable-stop material-symbols-outlined notranslate" aria-hidden="true">stop</span>
+    </button>
+  </ms-run-button>
+</template>
+
+<!-- Opened system-instructions panel (overlay / side panel). -->
+<template id="tpl-system-instructions-open">
+  <div class="cdk-overlay-container">
+    <ms-system-instructions-panel class="system-instructions">
+      <div class="title-row">
+        <input type="text" aria-label="System instructions title" value="">
+        <div class="saving-status"></div>
+        <button data-test-close-button aria-label="Close panel"><span class="material-symbols-outlined notranslate" aria-hidden="true">close</span></button>
+      </div>
+      <textarea class="in-run-settings mat-mdc-tooltip-trigger" cdktextareaautosize aria-label="System instructions" placeholder="Optional tone and style instructions for the model"></textarea>
+    </ms-system-instructions-panel>
+  </div>
+</template>
+</body>
+</html>
